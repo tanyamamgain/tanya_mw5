@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bin/rails test)",
+      "Bash(bin/rails test *)",
+      "Bash(bin/rails runner *)",
+      "Bash(bin/rails db:migrate)",
+      "Bash(bin/rails generate model *)",
+      "Bash(bin/rails generate migration *)"
+    ],
+    "ask": [
+      "Bash(bin/reset-db)"
+    ],
+    "defaultMode": "acceptEdits"
+  }
+}

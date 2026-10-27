@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= [content_for(:title), "models-and-tests"].compact.join(" · ") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      pre, code { font-family: ui-monospace, Menlo, Consolas, monospace !important; }
+    </style>
+  </head>
+
+  <body class="bg-stone-50 text-stone-900">
+    <nav class="bg-stone-900 text-stone-100 px-6 py-3 flex gap-6 text-sm">
+      <span class="font-semibold">models-and-tests</span>
+      <%= link_to "Files", root_path, class: "hover:underline" %>
+      <%= link_to "Data", data_path, class: "hover:underline" %>
+    </nav>
+    <main class="<%= content_for?(:wide) ? "max-w-screen-2xl" : "max-w-5xl" %> mx-auto p-6">
+      <%= yield %>
+    </main>
+  </body>
+</html>

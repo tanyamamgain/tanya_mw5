@@ -1,0 +1,40 @@
+Peanut butter and jelly
+
+Write your answers under each question.
+
+
+1. Estimate. How many steps will it take to tell someone how to make a peanut butter
+   and jelly sandwich? Write the number down before you start.
+
+
+
+
+2. Write the steps, one per line.
+
+
+
+
+3. Read your steps as a robot would: it does exactly what each line says, and nothing
+   else. Where does it get stuck? How many steps did you write, against your estimate?
+
+
+
+
+4. Make your steps work for anyone's sandwich:
+   a. Name the things you use, and use the names in your steps.
+   b. Write down one person's order. What do you need to know before you start?
+   c. Now everyone in the room wants one. How do you write all the orders down?
+
+
+
+
+5. Draw it (paper, tldraw or Excalidraw):
+   a. One sticky per thing that happens, in order.
+   b. Draw a box around the ones that belong together. Name each box.
+   c. On each box, write what it needs and what it hands back. Do you use any box twice?
+
+
+
+
+6. How do you know it worked? Write three sentences that must be true when the sandwich
+   is done. Not the steps: what you would check on the plate.

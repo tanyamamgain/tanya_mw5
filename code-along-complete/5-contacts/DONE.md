@@ -1,0 +1,20 @@
+# Definition of done
+
+What must be true for each model, one sentence per line, under its heading. Plain English,
+no Ruby. Write the rules, not the columns: what can't be allowed, what must you be able to
+find?
+
+This file is yours. Your agent reads it and writes one test for each sentence, named with that
+sentence. It doesn't write here. Whether every sentence got its test is yours to check.
+
+## Company
+A company can't be saved without a name.
+Two companies can't have the same name.
+
+## Contact
+A contact can't be saved without a company.
+I can find all the contacts at a company: Apple has three.
+
+## Salesperson
+
+## Activity

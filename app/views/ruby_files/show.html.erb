@@ -1,0 +1,72 @@
+<% content_for :title, @file.path %>
+<% content_for :wide, true %>
+
+<p class="text-sm text-stone-600 mb-1">
+  <%= link_to "All files", root_path, class: "hover:underline" %> / <span class="font-mono"><%= @file.folder %>/</span>
+</p>
+<h1 class="text-2xl font-semibold font-mono mb-4"><%= @file.name %></h1>
+
+<div class="flex flex-wrap items-center gap-3 mb-6">
+  <code class="bg-stone-900 text-stone-100 px-3 py-2 rounded text-sm"><%= @file.command %></code>
+  <% if @run %>
+    <%= link_to "Run it again", ruby_file_path(@file.path), class: "px-3 py-2 rounded bg-stone-200 hover:bg-stone-300 text-sm font-semibold" %>
+    <span class="text-sm text-stone-600">Ran in <%= @run.seconds %> seconds</span>
+  <% end %>
+</div>
+
+<div class="grid gap-6 lg:grid-cols-[3fr_2fr] items-start">
+  <%# The file: on the left on a wide screen, under the output on a narrow one %>
+  <section class="order-2 lg:order-1 min-w-0">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-stone-600 mb-1">The file</h2>
+    <div class="bg-white border border-stone-200 rounded py-3 overflow-x-auto">
+      <table class="font-mono text-sm w-full">
+        <% @file.source.lines.each.with_index(1) do |line, number| %>
+          <tr class="<%= "bg-red-100" if @run&.error_line == number %>">
+            <td class="select-none text-right text-stone-400 pl-3 pr-4 align-top"><%= number %></td>
+            <td class="pr-4 whitespace-pre-wrap break-words"><%= line.chomp %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </section>
+
+  <%# What it printed: stays in view while the file scrolls %>
+  <section class="order-1 lg:order-2 min-w-0 lg:sticky lg:top-6">
+    <% if @run.nil? %>
+      <p class="p-3 rounded bg-amber-50 border border-amber-300 text-amber-900">
+        This file asks you to type something, and a web page can't. Run it in the terminal with the
+        command above.
+      </p>
+    <% else %>
+      <% if @run.timed_out? %>
+        <p class="p-3 rounded bg-amber-50 border border-amber-300 text-amber-900 mb-4">
+          Stopped after <%= FileRun::TIME_LIMIT %> seconds. A loop that never ends? In the terminal,
+          Ctrl+C stops it.
+        </p>
+      <% end %>
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-stone-600 mb-1">Output</h2>
+      <% if @run.output.present? %>
+        <pre class="bg-white border border-stone-200 rounded p-4 text-sm whitespace-pre-wrap mb-2 max-h-[70vh] overflow-y-auto"><%= @run.output %></pre>
+      <% else %>
+        <p class="text-sm text-stone-500 italic mb-2">Nothing printed.</p>
+      <% end %>
+      <% if @run.output_cut? %>
+        <p class="text-sm text-stone-600 mb-2">Showing the first <%= number_with_delimiter(FileRun::MAX_OUTPUT) %> characters.</p>
+      <% end %>
+
+      <% if @run.failed? %>
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-red-800 mt-4 mb-1">Error</h2>
+        <p class="p-3 rounded bg-red-50 border border-red-300 text-red-900 font-mono text-sm whitespace-pre-wrap"><%= @run.error_message %></p>
+        <% if @run.error_line %>
+          <p class="text-sm text-stone-600 mt-1">Line <%= @run.error_line %> is marked in the file.</p>
+        <% end %>
+        <% if @run.error_trace.present? %>
+          <details class="mt-2 text-sm">
+            <summary class="cursor-pointer text-stone-600">The rest: where Ruby was when it happened</summary>
+            <pre class="bg-white border border-stone-200 rounded p-3 mt-2 text-xs whitespace-pre-wrap text-stone-600"><%= @run.error_trace %></pre>
+          </details>
+        <% end %>
+      <% end %>
+    <% end %>
+  </section>
+</div>

@@ -1,0 +1,51 @@
+<% content_for :title, "Files" %>
+
+<div class="grid gap-6 md:grid-cols-2 mb-8 items-start">
+  <section class="min-w-0">
+    <h1 class="text-2xl font-semibold mb-2">Run a file</h1>
+    <p class="text-stone-700 mb-3">
+      Each file's page runs it with the same command you type in the terminal and shows what it
+      printed. Change the file, save it, and refresh the page to run it again.
+    </p>
+    <p class="text-sm text-stone-600 mb-2">
+      A file you or your agent add to <code>scripts/</code> shows up here. A file anywhere else
+      still runs in the terminal, but it won't appear here.
+    </p>
+    <p class="text-sm text-stone-600">
+      <code>code-along-complete/</code> isn't listed. It's there to read and compare with your own
+      files.
+    </p>
+  </section>
+
+  <section class="min-w-0 bg-white border border-stone-200 rounded p-4">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-stone-600 mb-2">In the terminal</h2>
+    <p class="text-stone-700 mb-2">
+      The server keeps its terminal busy, so open a second one with the <strong>+</strong> on the
+      terminal panel. From the top folder of the repo (where README.md is), run:
+    </p>
+    <code class="block bg-stone-900 text-stone-100 px-3 py-2 rounded text-sm mb-2">bin/rails runner code-along/0-replay.rb</code>
+    <p class="text-sm text-stone-600">
+      Change the path to run a different file. Every file's page shows its exact command.
+    </p>
+  </section>
+</div>
+
+<div class="grid gap-6 md:grid-cols-3">
+  <% @folders.each do |folder, files| %>
+    <section>
+      <h2 class="font-mono font-semibold"><%= folder %>/</h2>
+      <p class="text-sm text-stone-600 mb-2"><%= RubyFile::FOLDERS[folder] %></p>
+      <% if files.empty? %>
+        <p class="text-sm text-stone-500 italic border-t border-stone-200 py-1.5">Nothing here yet.</p>
+      <% else %>
+        <ul class="border-t border-stone-200">
+          <% files.each do |file| %>
+            <li class="border-b border-stone-200">
+              <%= link_to file.name, ruby_file_path(file.path), class: "block py-1.5 font-mono text-sm hover:bg-stone-100" %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </section>
+  <% end %>
+</div>
